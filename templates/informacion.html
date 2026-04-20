@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Información — Citaciones</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:   #0a1628;
+    --blue:   #1a56db;
+    --cyan:   #06b6d4;
+    --white:  #f0f4ff;
+    --glass:  rgba(255,255,255,0.04);
+    --border: rgba(255,255,255,0.10);
+    --red:    #f43f5e;
+    --green:  #10b981;
+    --amber:  #f59e0b;
+    --gray:   #64748b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(26,86,219,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 90% 110%, rgba(6,182,212,0.15) 0%, transparent 60%);
+  }
+
+  /* ── HEADER ── */
+  header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(16px);
+    background: rgba(10,22,40,0.7);
+  }
+  .logo-dot {
+    width: 10px; height: 10px;
+    background: var(--cyan); border-radius: 50%;
+    box-shadow: 0 0 12px var(--cyan);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  header h1 { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+  .badge {
+    margin-left: auto; font-family: 'DM Mono', monospace;
+    font-size: 0.7rem; padding: 4px 12px;
+    background: rgba(6,182,212,0.12); border: 1px solid rgba(6,182,212,0.3);
+    border-radius: 20px; color: var(--cyan);
+  }
+  .btn-volver {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 16px;
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+    color: var(--white); border-radius: 10px;
+    font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+    transition: background .2s, border-color .2s;
+  }
+  .btn-volver:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+
+  /* ── MAIN ── */
+  main { max-width: 1000px; margin: 0 auto; padding: 40px 24px 60px; animation: fadeUp .4s ease; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── PERSONA CARD ── */
+  .persona-card {
+    background: var(--glass); border: 1px solid var(--border);
+    border-radius: 20px; padding: 28px 32px; margin-bottom: 16px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 20px;
+  }
+  .persona-nombre { font-size: 1.5rem; font-weight: 800; margin-bottom: 6px; }
+  .persona-meta { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--gray); line-height: 1.9; }
+  .persona-meta span { color: var(--white); }
+
+  .licencia-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+  .puntos-circle {
+    width: 76px; height: 76px; border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    border: 3px solid var(--cyan);
+    box-shadow: 0 0 24px rgba(6,182,212,0.25);
+  }
+  .puntos-num { font-size: 1.7rem; font-weight: 800; color: var(--cyan); line-height: 1; }
+  .puntos-lbl { font-size: 0.58rem; color: var(--gray); text-transform: uppercase; letter-spacing: .06em; }
+  .lic-meta { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--gray); text-align: right; line-height: 1.8; }
+  .lic-meta span { color: var(--white); }
+
+  /* ── RESUMEN FINANCIERO ── */
+  .fin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+    gap: 12px; margin-bottom: 20px;
+  }
+  .fin-card {
+    background: var(--glass); border: 1px solid var(--border);
+    border-radius: 14px; padding: 18px 20px;
+  }
+  .fin-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: .1em; color: var(--gray); margin-bottom: 8px; }
+  .fin-value { font-family: 'DM Mono', monospace; font-size: 1.2rem; font-weight: 500; }
+  .fin-value.danger { color: var(--red); }
+  .fin-value.ok     { color: var(--green); }
+  .fin-value.warn   { color: var(--amber); }
+
+  /* ── TABS ── */
+  .tabs { display: flex; gap: 4px; margin-bottom: 14px; flex-wrap: wrap; }
+  .tab {
+    padding: 9px 18px; border-radius: 10px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--gray); font-family: 'Syne', sans-serif;
+    font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all .2s;
+  }
+  .tab.active { background: rgba(26,86,219,0.2); border-color: var(--blue); color: var(--white); }
+  .tab .cnt {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: rgba(255,255,255,0.08); font-size: 0.7rem; margin-left: 6px;
+  }
+  .tab.active .cnt { background: var(--blue); }
+
+  /* ── TABLA ── */
+  .table-wrap {
+    background: var(--glass); border: 1px solid var(--border);
+    border-radius: 16px; overflow-x: auto;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; min-width: 680px; }
+  thead th {
+    background: rgba(255,255,255,0.04); padding: 12px 16px;
+    text-align: left; font-size: 0.68rem; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--gray);
+    border-bottom: 1px solid var(--border); white-space: nowrap;
+  }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.025); }
+  td { padding: 13px 16px; font-family: 'DM Mono', monospace; vertical-align: middle; }
+  .td-text { font-family: 'Syne', sans-serif; font-size: 0.8rem; max-width: 200px; line-height: 1.4; }
+
+  .pill {
+    display: inline-block; padding: 3px 10px; border-radius: 20px;
+    font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em;
+  }
+  .pill-pendiente { background: rgba(245,158,11,0.15); color: var(--amber); border: 1px solid rgba(245,158,11,0.3); }
+  .pill-pagada    { background: rgba(16,185,129,0.15); color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
+  .pill-anulada   { background: rgba(100,116,139,0.15); color: #94a3b8; border: 1px solid rgba(100,116,139,0.3); }
+  .pill-impugnada { background: rgba(244,63,94,0.15); color: var(--red); border: 1px solid rgba(244,63,94,0.3); }
+
+  .empty-state {
+    text-align: center; padding: 52px 24px;
+    color: var(--gray); font-size: 0.9rem;
+  }
+  .empty-icon { font-size: 2.2rem; display: block; margin-bottom: 12px; }
+
+  .timestamp {
+    text-align: right; font-family: 'DM Mono', monospace;
+    font-size: 0.68rem; color: #1e293b; margin-top: 20px;
+  }
+
+  /* sin datos al cargar */
+  #no-data {
+    display: none; text-align: center; padding: 80px 24px;
+    color: var(--gray);
+  }
+
+  @media(max-width:640px) {
+    header { padding: 14px 16px; }
+    main { padding: 24px 14px 48px; }
+    .persona-card { padding: 20px; }
+    .persona-nombre { font-size: 1.2rem; }
+    .licencia-side { align-items: flex-start; }
+    .lic-meta { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-dot"></div>
+  <h1>Sistema de Citaciones</h1>
+  <a class="btn-volver" href="/">← Nueva consulta</a>
+  <div class="badge">AXIS v4.0</div>
+</header>
+
+<main id="main-content">
+
+  <!-- Sin datos (si alguien llega directo sin búsqueda) -->
+  <div id="no-data">
+    <div style="font-size:2.5rem;margin-bottom:16px">⚠</div>
+    <p>No hay datos para mostrar.<br>
+    <a href="/" style="color:var(--cyan);text-decoration:none">← Realiza una consulta primero</a></p>
+  </div>
+
+  <!-- Persona -->
+  <div class="persona-card" id="personaCard" style="display:none"></div>
+
+  <!-- Financiero -->
+  <div class="fin-grid" id="finGrid"></div>
+
+  <!-- Tabs -->
+  <div class="tabs" id="tabs"></div>
+
+  <!-- Tabla -->
+  <div class="table-wrap" id="tableWrap" style="display:none">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th># Citación</th>
+          <th>Entidad</th>
+          <th>Placa</th>
+          <th>Fecha Emisión</th>
+          <th>Infracción</th>
+          <th>Puntos</th>
+          <th>Multa</th>
+          <th>Total a Pagar</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody id="tablaCitaciones"></tbody>
+    </table>
+  </div>
+
+  <div class="timestamp" id="timestamp"></div>
+</main>
+
+<script>
+  const TABS   = ['pendientes','pagadas','anuladas','impugnadas'];
+  const LABELS = { pendientes:'Pendientes', pagadas:'Pagadas', anuladas:'Anuladas', impugnadas:'En Impugnación' };
+  let datos     = null;
+  let tabActual = 'pendientes';
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const raw = sessionStorage.getItem('informacion');
+    if (!raw) {
+      document.getElementById('no-data').style.display = 'block';
+      return;
+    }
+    datos = JSON.parse(raw);
+    renderTodo();
+  });
+
+  function renderTodo() {
+    const d = datos;
+    const p = d.persona;
+    const l = d.licencia;
+
+    // ── Persona ────────────────────────────────────────────────
+    const estadoLic = l ? l.estado : '—';
+    const colorLic  = estadoLic === 'ACTIVA'
+      ? 'var(--green)' : estadoLic === 'SUSPENDIDA'
+      ? 'var(--red)' : 'var(--gray)';
+
+    document.getElementById('personaCard').innerHTML = `
+      <div>
+        <div class="persona-nombre">${p.apellidos} ${p.nombres}</div>
+        <div class="persona-meta">
+          CED &mdash; <span>${p.cedula}</span><br>
+          Sexo: <span>${p.sexo || '—'}</span> &nbsp;·&nbsp; E. Civil: <span>${p.estado_civil || '—'}</span><br>
+          Lugar de nacimiento: <span>${p.lugar_nacimiento || '—'}</span><br>
+          Nacionalidad: <span>${p.nacionalidad || '—'}</span>
+        </div>
+      </div>
+      <div class="licencia-side">
+        <div class="puntos-circle">
+          <span class="puntos-num">${l ? l.puntos : '—'}</span>
+          <span class="puntos-lbl">puntos</span>
+        </div>
+        <div class="lic-meta">
+          LICENCIA TIPO: <span>${l ? l.tipo : '—'}</span><br>
+          VALIDEZ: <span>${l ? fmtFecha(l.fecha_emision) + ' – ' + fmtFecha(l.fecha_expiracion) : '—'}</span><br>
+          ESTADO: <span style="color:${colorLic};font-weight:700">${estadoLic}</span>
+        </div>
+      </div>`;
+    document.getElementById('personaCard').style.display = 'flex';
+
+    // ── Financiero ─────────────────────────────────────────────
+    const totalPend = d.total_pendiente;
+    document.getElementById('finGrid').innerHTML = `
+      <div class="fin-card">
+        <div class="fin-label">Valor Pendiente</div>
+        <div class="fin-value ${totalPend > 0 ? 'danger' : 'ok'}">$ ${totalPend.toFixed(2)}</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-label">Pendientes</div>
+        <div class="fin-value ${d.pendientes.length > 0 ? 'warn' : 'ok'}">${d.pendientes.length}</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-label">Pagadas</div>
+        <div class="fin-value ok">${d.pagadas.length}</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-label">En Impugnación</div>
+        <div class="fin-value">${d.impugnadas.length}</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-label">Anuladas</div>
+        <div class="fin-value">${d.anuladas.length}</div>
+      </div>`;
+
+    // ── Tabs ───────────────────────────────────────────────────
+    renderTabs();
+    renderTabla();
+
+    document.getElementById('tableWrap').style.display = 'block';
+    document.getElementById('timestamp').textContent =
+      `CONSULTA · PRODUCCIÓN · ${new Date().toLocaleString('es-EC')} · AXIS – Versión 4.0`;
+  }
+
+  function renderTabs() {
+    document.getElementById('tabs').innerHTML = TABS.map(t => `
+      <button class="tab ${t === tabActual ? 'active' : ''}" onclick="cambiarTab('${t}')">
+        ${LABELS[t]}<span class="cnt">${datos[t].length}</span>
+      </button>`).join('');
+  }
+
+  function cambiarTab(tab) {
+    tabActual = tab;
+    renderTabs();
+    renderTabla();
+  }
+
+  function renderTabla() {
+    const lista = datos[tabActual];
+    const tbody = document.getElementById('tablaCitaciones');
+    if (!lista.length) {
+      tbody.innerHTML = `<tr><td colspan="10">
+        <div class="empty-state">
+          <span class="empty-icon">📋</span>
+          No hay citaciones en este estado
+        </div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = lista.map((c, i) => `
+      <tr>
+        <td>${i + 1}</td>
+        <td>${c.numero_citacion || '—'}</td>
+        <td class="td-text">${c.entidad || '—'}</td>
+        <td>${c.placa || '—'}</td>
+        <td>${fmtFechaHora(c.fecha)}</td>
+        <td class="td-text">${c.nombre_contravencion || '—'}</td>
+        <td>${c.puntos_perdidos ?? 0}</td>
+        <td>$ ${parseFloat(c.multa_calculada || 0).toFixed(2)}</td>
+        <td>$ ${parseFloat(c.total_pagar || 0).toFixed(2)}</td>
+        <td><span class="pill pill-${c.estado}">${c.estado}</span></td>
+      </tr>`).join('');
+  }
+
+  function fmtFecha(d) {
+    if (!d) return '—';
+    return new Date(d).toLocaleDateString('es-EC', { day:'2-digit', month:'2-digit', year:'numeric' });
+  }
+  function fmtFechaHora(d) {
+    if (!d) return '—';
+    return new Date(d).toLocaleString('es-EC', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+  }
+</script>
+</body>
+</html>
