@@ -131,14 +131,14 @@
   <div class="search-card">
     <div class="card-icon">🔍</div>
     <h2>Consulta de Citaciones</h2>
-    <p>Ingresa la cédula de identidad o el nombre del conductor para consultar sus citaciones de tránsito.</p>
+    <p>Ingresar la cédula de identidad o el nombre de la persona para consultar sus citaciones de tránsito.</p>
 
     <div class="field-group">
       <div>
         <div class="field-label">Tipo de búsqueda</div>
         <select id="tipoBusqueda">
           <option value="cedula">Cédula de Identidad</option>
-          <option value="nombre">Nombre / Apellido</option>
+          <option value="nombre">Nombres y Apellids</option>
         </select>
       </div>
       <div>
@@ -186,7 +186,6 @@
         return;
       }
 
-      // Guardamos la información y navegamos a la página de información
       sessionStorage.setItem('informacion', JSON.stringify(json));
       window.location.href = '/informacion';
 
