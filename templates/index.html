@@ -7,130 +7,185 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy:   #0a1628;
-    --blue:   #1a56db;
-    --cyan:   #06b6d4;
-    --white:  #f0f4ff;
-    --glass:  rgba(255,255,255,0.04);
-    --border: rgba(255,255,255,0.10);
-    --gray:   #64748b;
-    --red:    #f43f5e;
+    --gold:   #f5c518;
+    --gold2:  #e6a800;
+    --dark:   #1a1a2e;
+    --gray:   #6b7280;
+    --gray2:  #f3f4f6;
+    --border: #e5e7eb;
+    --red:    #ef4444;
+    --white:  #ffffff;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Syne', sans-serif;
-    background: var(--navy);
-    color: var(--white);
+    background: #f9fafb;
+    color: var(--dark);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-image:
-      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(26,86,219,0.25) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 40% at 90% 110%, rgba(6,182,212,0.15) 0%, transparent 60%);
   }
+
+  /* ── HEADER ── */
   header {
     display: flex; align-items: center; gap: 14px;
-    padding: 24px 40px;
-    border-bottom: 1px solid var(--border);
+    padding: 16px 40px;
+    background: var(--white);
+    border-bottom: 3px solid var(--gold);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
+  .logo-wrap { display: flex; align-items: center; gap: 12px; }
   .logo-dot {
     width: 10px; height: 10px;
-    background: var(--cyan); border-radius: 50%;
-    box-shadow: 0 0 12px var(--cyan);
+    background: var(--gold); border-radius: 50%;
+    box-shadow: 0 0 8px var(--gold);
     animation: pulse 2s infinite;
   }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-  header h1 { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
-  .badge {
-    margin-left: auto; font-family: 'DM Mono', monospace;
-    font-size: 0.7rem; padding: 4px 12px;
-    background: rgba(6,182,212,0.12); border: 1px solid rgba(6,182,212,0.3);
-    border-radius: 20px; color: var(--cyan);
+  header h1 {
+    font-size: 1rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--dark);
   }
+  .badge {
+    margin-left: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem; padding: 4px 12px;
+    background: rgba(245,197,24,0.12);
+    border: 1px solid rgba(245,197,24,0.4);
+    border-radius: 20px; color: #92700a;
+    font-weight: 600;
+  }
+
+  /* ── MAIN ── */
   main {
     flex: 1; display: flex;
     align-items: center; justify-content: center; padding: 40px 24px;
   }
+
+  /* ── CARD ── */
   .search-card {
-    width: 100%; max-width: 520px;
-    background: var(--glass); border: 1px solid var(--border);
-    border-radius: 24px; padding: 48px 44px;
-    backdrop-filter: blur(20px);
-    animation: fadeUp .5s ease;
+    width: 100%; max-width: 500px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 44px 40px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    animation: fadeUp .4s ease;
   }
-  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
   .card-icon {
     width: 52px; height: 52px;
-    background: rgba(6,182,212,0.12); border: 1px solid rgba(6,182,212,0.3);
-    border-radius: 14px; display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem; margin-bottom: 24px;
+    background: rgba(245,197,24,0.12);
+    border: 2px solid var(--gold);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 22px;
   }
+
   .search-card h2 {
-    font-size: 2rem; font-weight: 800; margin-bottom: 8px;
-    background: linear-gradient(135deg, #fff 40%, var(--cyan));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    font-size: 1.7rem; font-weight: 800; margin-bottom: 8px;
+    color: var(--dark);
   }
-  .search-card p { color: var(--gray); font-size: 0.88rem; margin-bottom: 36px; line-height: 1.6; }
-  .field-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .1em; color: var(--gray); margin-bottom: 6px; }
-  .field-group { display: flex; flex-direction: column; gap: 16px; }
+  .search-card h2 span { color: var(--gold2); }
+  .search-card p {
+    color: var(--gray); font-size: 0.86rem;
+    margin-bottom: 32px; line-height: 1.6;
+  }
+
+  /* ── CAMPOS ── */
+  .field-label {
+    font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: .08em; color: var(--gray);
+    margin-bottom: 6px; font-weight: 600;
+  }
+  .field-group { display: flex; flex-direction: column; gap: 14px; }
+
   select, input[type="text"] {
     width: 100%;
-    background: rgba(255,255,255,0.06); border: 1px solid var(--border);
-    color: var(--white); font-family: 'Syne', sans-serif;
-    font-size: 0.95rem; padding: 14px 18px; border-radius: 12px;
-    outline: none; transition: border .2s, box-shadow .2s;
+    background: var(--gray2);
+    border: 1px solid var(--border);
+    color: var(--dark);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.92rem; padding: 12px 14px;
+    border-radius: 8px; outline: none;
+    transition: border .2s, box-shadow .2s;
   }
   select { cursor: pointer; }
-  select option { background: #1e293b; }
   input[type="text"]:focus, select:focus {
-    border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(6,182,212,0.15);
+    border-color: var(--gold);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(245,197,24,0.15);
   }
-  input::placeholder { color: #475569; }
+  input::placeholder { color: #9ca3af; }
+
+  /* ── BOTÓN ── */
   .btn-search {
     width: 100%; margin-top: 4px;
     display: flex; align-items: center; justify-content: center; gap: 10px;
-    padding: 16px;
-    background: linear-gradient(135deg, var(--blue), var(--cyan));
-    color: #fff; border: none; border-radius: 12px;
-    font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--gold2), var(--gold));
+    color: #1a1a2e;
+    border: none; border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem; font-weight: 800;
     cursor: pointer; transition: transform .15s, box-shadow .15s;
+    letter-spacing: .04em;
   }
-  .btn-search:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(26,86,219,0.45); }
-  .btn-search:disabled { opacity: .7; cursor: not-allowed; transform: none; }
+  .btn-search:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245,197,24,0.4);
+  }
+  .btn-search:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+  /* ── SPINNER ── */
   .btn-spinner {
     display: none; width: 18px; height: 18px;
-    border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+    border: 2px solid rgba(26,26,46,0.2);
+    border-top-color: #1a1a2e;
     border-radius: 50%; animation: spin .6s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── ERROR ── */
   .error-box {
     display: none;
-    background: rgba(244,63,94,0.1); border: 1px solid rgba(244,63,94,0.3);
-    border-radius: 10px; padding: 12px 16px;
-    color: #fda4af; font-size: 0.85rem; margin-top: 14px; text-align: center;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px; padding: 12px 16px;
+    color: #b91c1c; font-size: 0.84rem;
+    margin-top: 14px; text-align: center;
   }
+
+  /* ── FOOTER ── */
   footer {
-    text-align: center; padding: 20px;
-    font-family: 'DM Mono', monospace; font-size: 0.68rem; color: #1e293b;
+    text-align: center; padding: 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem; color: #9ca3af;
+    border-top: 1px solid var(--border);
+    background: var(--white);
   }
+
   @media(max-width:500px) {
-    .search-card { padding: 32px 24px; }
-    header { padding: 16px 20px; }
+    .search-card { padding: 28px 20px; }
+    header { padding: 14px 20px; }
   }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo-dot"></div>
-  <h1>Simulación de Sistema de Citaciones</h1>
+  <div class="logo-wrap">
+    <div class="logo-dot"></div>
+    <h1>Simulación de Sistema de Citaciones</h1>
+  </div>
   <div class="badge">AXIS v4.0 · NeonDB</div>
 </header>
 
 <main>
   <div class="search-card">
     <div class="card-icon">🔍</div>
-    <h2>Consulta de Citaciones</h2>
+    <h2>Consulta de <span>Citaciones</span></h2>
     <p>Ingresar la cédula de identidad o el nombre de la persona para consultar sus citaciones de tránsito.</p>
 
     <div class="field-group">
