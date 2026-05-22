@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Consulta de Citaciones</title>
+<title>Consulta de Citaciones — AXIS</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -34,7 +34,6 @@
     border-bottom: 3px solid var(--gold);
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
-  .logo-wrap { display: flex; align-items: center; gap: 12px; }
   .logo-dot {
     width: 10px; height: 10px;
     background: var(--gold); border-radius: 50%;
@@ -44,8 +43,7 @@
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
   header h1 {
     font-size: 1rem; font-weight: 700;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--dark);
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--dark);
   }
   .badge {
     margin-left: auto;
@@ -53,8 +51,7 @@
     font-size: 0.68rem; padding: 4px 12px;
     background: rgba(245,197,24,0.12);
     border: 1px solid rgba(245,197,24,0.4);
-    border-radius: 20px; color: #92700a;
-    font-weight: 600;
+    border-radius: 20px; color: #92700a; font-weight: 600;
   }
 
   /* ── MAIN ── */
@@ -65,7 +62,7 @@
 
   /* ── CARD ── */
   .search-card {
-    width: 100%; max-width: 500px;
+    width: 100%; max-width: 480px;
     background: var(--white);
     border: 1px solid var(--border);
     border-radius: 16px; padding: 44px 40px;
@@ -80,12 +77,11 @@
     border: 2px solid var(--gold);
     border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem; margin-bottom: 22px;
+    font-size: 1.5rem; margin-bottom: 22px;
   }
 
   .search-card h2 {
     font-size: 1.7rem; font-weight: 800; margin-bottom: 8px;
-    color: var(--dark);
   }
   .search-card h2 span { color: var(--gold2); }
   .search-card p {
@@ -110,8 +106,9 @@
     font-size: 0.92rem; padding: 12px 14px;
     border-radius: 8px; outline: none;
     transition: border .2s, box-shadow .2s;
+    -webkit-appearance: none;
   }
-  select { cursor: pointer; }
+  select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
   input[type="text"]:focus, select:focus {
     border-color: var(--gold);
     background: var(--white);
@@ -132,13 +129,12 @@
     cursor: pointer; transition: transform .15s, box-shadow .15s;
     letter-spacing: .04em;
   }
-  .btn-search:hover {
+  .btn-search:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(245,197,24,0.4);
   }
-  .btn-search:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+  .btn-search:disabled { opacity: .6; cursor: not-allowed; }
 
-  /* ── SPINNER ── */
   .btn-spinner {
     display: none; width: 18px; height: 18px;
     border: 2px solid rgba(26,26,46,0.2);
@@ -147,7 +143,6 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ── ERROR ── */
   .error-box {
     display: none;
     background: #fef2f2;
@@ -155,6 +150,12 @@
     border-radius: 8px; padding: 12px 16px;
     color: #b91c1c; font-size: 0.84rem;
     margin-top: 14px; text-align: center;
+    animation: shake .3s ease;
+  }
+  @keyframes shake {
+    0%,100%{transform:translateX(0)}
+    25%{transform:translateX(-6px)}
+    75%{transform:translateX(6px)}
   }
 
   /* ── FOOTER ── */
@@ -169,16 +170,15 @@
   @media(max-width:500px) {
     .search-card { padding: 28px 20px; }
     header { padding: 14px 20px; }
+    header h1 { font-size: 0.85rem; }
   }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo-wrap">
-    <div class="logo-dot"></div>
-    <h1>Simulación de Sistema de Citaciones</h1>
-  </div>
+  <div class="logo-dot"></div>
+  <h1>Sistema de Citaciones</h1>
   <div class="badge">AXIS v4.0 · NeonDB</div>
 </header>
 
@@ -186,19 +186,19 @@
   <div class="search-card">
     <div class="card-icon">🔍</div>
     <h2>Consulta de <span>Citaciones</span></h2>
-    <p>Ingresar la cédula de identidad o el nombre de la persona para consultar sus citaciones de tránsito.</p>
+    <p>Ingrese la cédula de identidad o el nombre de la persona para consultar sus citaciones de tránsito y estado de puntos.</p>
 
     <div class="field-group">
       <div>
         <div class="field-label">Tipo de búsqueda</div>
-        <select id="tipoBusqueda">
+        <select id="tipoBusqueda" onchange="actualizarPlaceholder()">
           <option value="cedula">Cédula de Identidad</option>
           <option value="nombre">Nombres y Apellidos</option>
         </select>
       </div>
       <div>
         <div class="field-label">Valor</div>
-        <input type="text" id="valorBusqueda" placeholder="Ej: 1725090698" />
+        <input type="text" id="valorBusqueda" placeholder="Ej: 1725090698" autocomplete="off" />
       </div>
       <button class="btn-search" id="btnBuscar" onclick="buscar()">
         <div class="btn-spinner" id="btnSpinner"></div>
@@ -213,6 +213,14 @@
 <footer>CONSULTA · PRODUCCIÓN · AXIS – Versión 4.0</footer>
 
 <script>
+  function actualizarPlaceholder() {
+    const tipo = document.getElementById('tipoBusqueda').value;
+    const input = document.getElementById('valorBusqueda');
+    input.placeholder = tipo === 'cedula' ? 'Ej: 1725090698' : 'Ej: García López';
+    input.value = '';
+    input.focus();
+  }
+
   document.getElementById('valorBusqueda').addEventListener('keydown', e => {
     if (e.key === 'Enter') buscar();
   });
@@ -220,12 +228,17 @@
   async function buscar() {
     const tipo  = document.getElementById('tipoBusqueda').value;
     const valor = document.getElementById('valorBusqueda').value.trim();
-    if (!valor) return;
+    if (!valor) {
+      mostrarError('Por favor ingrese un valor de búsqueda.');
+      return;
+    }
+
+    const errBox = document.getElementById('errorBox');
+    errBox.style.display = 'none';
 
     document.getElementById('btnSpinner').style.display = 'block';
     document.getElementById('btnTexto').textContent = 'Consultando…';
     document.getElementById('btnBuscar').disabled = true;
-    document.getElementById('errorBox').style.display = 'none';
 
     try {
       const res  = await fetch('/api/consulta', {
@@ -245,7 +258,7 @@
       window.location.href = '/informacion';
 
     } catch(e) {
-      mostrarError('No se pudo conectar con el servidor.');
+      mostrarError('No se pudo conectar con el servidor. Intente de nuevo.');
       resetBtn();
     }
   }
@@ -254,6 +267,10 @@
     const box = document.getElementById('errorBox');
     box.textContent = '⚠ ' + msg;
     box.style.display = 'block';
+    box.style.animation = 'none';
+    void box.offsetWidth;
+    box.style.animation = 'shake .3s ease';
+    resetBtn();
   }
 
   function resetBtn() {

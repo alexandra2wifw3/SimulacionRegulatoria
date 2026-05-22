@@ -18,6 +18,7 @@
     --red:    #ef4444;
     --green:  #10b981;
     --amber:  #f59e0b;
+    --blue:   #3b82f6;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -34,7 +35,7 @@
     background: var(--white);
     border-bottom: 3px solid var(--gold);
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    position: sticky; top: 0; z-index: 10;
+    position: sticky; top: 0; z-index: 100;
   }
   .logo-dot {
     width: 10px; height: 10px;
@@ -43,10 +44,7 @@
     animation: pulse 2s infinite;
   }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-  header h1 {
-    font-size: 1rem; font-weight: 700;
-    letter-spacing: 0.08em; text-transform: uppercase; color: var(--dark);
-  }
+  header h1 { font-size: 1rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
   .badge {
     font-family: 'DM Mono', monospace;
     font-size: 0.68rem; padding: 4px 12px;
@@ -67,7 +65,7 @@
   .btn-volver:hover { background: #e5e7eb; }
 
   /* ── MAIN ── */
-  main { max-width: 1000px; margin: 0 auto; padding: 36px 24px 60px; animation: fadeUp .4s ease; }
+  main { max-width: 1060px; margin: 0 auto; padding: 36px 24px 60px; animation: fadeUp .4s ease; }
   @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
 
   /* ── PERSONA CARD ── */
@@ -80,32 +78,63 @@
     flex-wrap: wrap; gap: 20px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   }
-  .persona-nombre { font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; color: var(--dark); }
+  .persona-nombre { font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; }
   .persona-meta { font-family: 'DM Mono', monospace; font-size: 0.76rem; color: var(--gray); line-height: 1.9; }
   .persona-meta span { color: var(--dark); }
 
   .licencia-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+
+  /* ── CÍRCULO DE PUNTOS (clickeable) ── */
+  .puntos-btn {
+    background: none; border: none; cursor: pointer; padding: 0;
+    position: relative;
+  }
   .puntos-circle {
-    width: 72px; height: 72px; border-radius: 50%;
+    width: 80px; height: 80px; border-radius: 50%;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     border: 3px solid var(--gold);
     box-shadow: 0 0 16px rgba(245,197,24,0.25);
     background: rgba(245,197,24,0.06);
+    transition: transform .2s, box-shadow .2s, background .2s;
+    position: relative;
   }
-  .puntos-num { font-size: 1.6rem; font-weight: 800; color: var(--gold2); line-height: 1; }
-  .puntos-lbl { font-size: 0.56rem; color: var(--gray); text-transform: uppercase; letter-spacing: .06em; }
+  .puntos-btn:hover .puntos-circle {
+    transform: scale(1.08);
+    box-shadow: 0 0 24px rgba(245,197,24,0.45);
+    background: rgba(245,197,24,0.14);
+  }
+  .puntos-circle::after {
+    content: '📋';
+    position: absolute;
+    bottom: -2px; right: -2px;
+    width: 22px; height: 22px;
+    background: var(--gold);
+    border-radius: 50%;
+    border: 2px solid var(--white);
+    font-size: 0.6rem;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  .puntos-num { font-size: 1.8rem; font-weight: 800; color: var(--gold2); line-height: 1; }
+  .puntos-lbl { font-size: 0.56rem; color: var(--gray); text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; }
+  .puntos-hint {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem; color: var(--gold2);
+    text-align: center; margin-top: 2px;
+    font-weight: 600; letter-spacing: .04em;
+  }
+
   .lic-meta { font-family: 'DM Mono', monospace; font-size: 0.71rem; color: var(--gray); text-align: right; line-height: 1.9; }
   .lic-meta span { color: var(--dark); font-weight: 600; }
 
-  /* ── RESUMEN FINANCIERO ── */
+  /* ── FINANCIERO ── */
   .fin-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 10px; margin-bottom: 16px;
   }
   .fin-card {
-    background: var(--white);
-    border: 1px solid var(--border);
+    background: var(--white); border: 1px solid var(--border);
     border-radius: 10px; padding: 16px 18px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.04);
   }
@@ -124,12 +153,7 @@
     font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all .2s;
   }
   .tab:hover { border-color: var(--gold); color: var(--dark); }
-  .tab.active {
-    background: var(--gold);
-    border-color: var(--gold);
-    color: var(--dark);
-    font-weight: 700;
-  }
+  .tab.active { background: var(--gold); border-color: var(--gold); color: var(--dark); font-weight: 700; }
   .tab .cnt {
     display: inline-flex; align-items: center; justify-content: center;
     width: 18px; height: 18px; border-radius: 50%;
@@ -138,23 +162,20 @@
 
   /* ── TABLA ── */
   .table-wrap {
-    background: var(--white);
-    border: 1px solid var(--border);
+    background: var(--white); border: 1px solid var(--border);
     border-radius: 12px; overflow-x: auto;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   }
-  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; min-width: 680px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; min-width: 700px; }
   thead th {
-    background: var(--gray2);
-    padding: 11px 16px; text-align: left;
-    font-size: 0.67rem; letter-spacing: .08em;
-    text-transform: uppercase; color: var(--gray);
-    border-bottom: 1px solid var(--border); white-space: nowrap;
+    background: var(--gray2); padding: 11px 16px; text-align: left;
+    font-size: 0.67rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--gray); border-bottom: 1px solid var(--border); white-space: nowrap;
   }
   tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
   tbody tr:last-child { border-bottom: none; }
   tbody tr:hover { background: rgba(245,197,24,0.04); }
-  td { padding: 12px 16px; font-family: 'DM Mono', monospace; vertical-align: middle; color: var(--dark); }
+  td { padding: 12px 16px; font-family: 'DM Mono', monospace; vertical-align: middle; }
   .td-text { font-family: 'Syne', sans-serif; font-size: 0.8rem; max-width: 200px; line-height: 1.4; }
 
   /* ── PILLS ── */
@@ -162,15 +183,13 @@
     display: inline-block; padding: 3px 10px; border-radius: 20px;
     font-size: 0.67rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
   }
-  .pill-pendiente { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
-  .pill-pagada    { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
-  .pill-anulada   { background: #f3f4f6; color: #6b7280; border: 1px solid #d1d5db; }
-  .pill-impugnada { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+  .pill-PENDIENTE { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+  .pill-PAGADA    { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+  .pill-ANULADA   { background: #f3f4f6; color: #6b7280; border: 1px solid #d1d5db; }
+  .pill-IMPUGNADA { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+  .pill-EN_CONVENIO { background: #ede9fe; color: #5b21b6; border: 1px solid #c4b5fd; }
 
-  .empty-state {
-    text-align: center; padding: 48px 24px;
-    color: var(--gray); font-size: 0.9rem;
-  }
+  .empty-state { text-align: center; padding: 48px 24px; color: var(--gray); font-size: 0.9rem; }
   .empty-icon { font-size: 2rem; display: block; margin-bottom: 12px; }
 
   .timestamp {
@@ -178,17 +197,125 @@
     font-size: 0.66rem; color: #9ca3af; margin-top: 16px;
   }
 
-  #no-data {
+  /* ══════════════════════════════════════
+     MODAL DE HISTORIAL DE PUNTOS
+  ══════════════════════════════════════ */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; animation: overlayIn .2s ease; }
+  @keyframes overlayIn { from{opacity:0} to{opacity:1} }
+
+  .modal {
+    background: var(--white);
+    border-radius: 16px;
+    width: 100%; max-width: 700px;
+    max-height: 85vh;
+    display: flex; flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    animation: modalIn .25s cubic-bezier(.34,1.56,.64,1);
+    overflow: hidden;
+  }
+  @keyframes modalIn { from{opacity:0;transform:scale(.92) translateY(20px)} to{opacity:1;transform:scale(1) translateY(0)} }
+
+  .modal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 28px 18px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .modal-header-left { display: flex; align-items: center; gap: 14px; }
+  .modal-puntos-badge {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(245,197,24,0.12);
+    border: 2px solid var(--gold);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .modal-puntos-num { font-size: 1.2rem; font-weight: 800; color: var(--gold2); line-height: 1; }
+  .modal-puntos-lbl { font-size: 0.5rem; color: var(--gray); text-transform: uppercase; letter-spacing: .06em; }
+  .modal-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 3px; }
+  .modal-subtitle { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--gray); }
+
+  .modal-close {
+    width: 34px; height: 34px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--gray2);
+    cursor: pointer; font-size: 1.1rem; color: var(--gray);
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s, color .2s; flex-shrink: 0;
+  }
+  .modal-close:hover { background: #fee2e2; color: var(--red); border-color: #fca5a5; }
+
+  .modal-body { overflow-y: auto; flex: 1; }
+
+  /* Tabla del historial */
+  .hist-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+  .hist-table thead th {
+    background: var(--gray2); padding: 10px 16px; text-align: left;
+    font-size: 0.63rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--gray); border-bottom: 1px solid var(--border);
+    white-space: nowrap; position: sticky; top: 0; z-index: 1;
+  }
+  .hist-table tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
+  .hist-table tbody tr:last-child { border-bottom: none; }
+  .hist-table tbody tr:hover { background: rgba(245,197,24,0.04); }
+  .hist-table td { padding: 10px 16px; font-family: 'DM Mono', monospace; vertical-align: middle; }
+  .hist-table .td-obs { font-family: 'Syne', sans-serif; font-size: 0.76rem; max-width: 220px; line-height: 1.4; color: var(--dark); }
+
+  .puntos-delta {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-weight: 700; font-size: 0.82rem;
+  }
+  .puntos-delta.neg { color: var(--red); }
+  .puntos-delta.pos { color: var(--green); }
+  .puntos-delta.neu { color: var(--gray); }
+
+  .tipo-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+  }
+  .tipo-INFRACCION  { background: #fee2e2; color: #991b1b; }
+  .tipo-RECUPERACION { background: #d1fae5; color: #065f46; }
+  .tipo-CURSO       { background: #dbeafe; color: #1e40af; }
+  .tipo-INICIAL     { background: #f3f4f6; color: #374151; }
+  .tipo-AJUSTE      { background: #fef3c7; color: #92400e; }
+
+  /* Barra de progreso de puntos */
+  .puntos-bar-wrap { padding: 16px 24px 12px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .puntos-bar-label { display: flex; justify-content: space-between; margin-bottom: 6px;
+    font-size: 0.72rem; color: var(--gray); font-family: 'DM Mono', monospace; }
+  .puntos-bar-label strong { color: var(--dark); }
+  .puntos-bar-track {
+    height: 8px; background: var(--gray2); border-radius: 4px; overflow: hidden;
+  }
+  .puntos-bar-fill {
+    height: 100%; border-radius: 4px;
+    transition: width .6s cubic-bezier(.34,1,.64,1);
+  }
+
+  #noData {
     display: none; text-align: center; padding: 80px 24px; color: var(--gray);
   }
 
   @media(max-width:640px) {
     header { padding: 12px 16px; }
+    header h1 { font-size: 0.85rem; }
     main { padding: 20px 12px 48px; }
     .persona-card { padding: 18px; }
     .persona-nombre { font-size: 1.15rem; }
     .licencia-side { align-items: flex-start; }
     .lic-meta { text-align: left; }
+    .puntos-hint { text-align: left; }
+    .modal { max-height: 92vh; }
+    .modal-header { padding: 16px 18px 14px; }
+    .hist-table { min-width: 560px; }
+    .modal-body { overflow-x: auto; }
   }
 </style>
 </head>
@@ -196,19 +323,17 @@
 
 <header>
   <div class="logo-dot"></div>
-  <h1>Simulación de Sistema de Citaciones</h1>
+  <h1>Sistema de Citaciones</h1>
   <a class="btn-volver" href="/">⮜ Nueva consulta</a>
   <div class="badge">AXIS v4.0</div>
 </header>
 
-<main id="main-content">
+<main id="mainContent">
 
-  <div id="no-data">
+  <div id="noData" style="display:none; text-align:center; padding:80px 24px; color:var(--gray);">
     <div style="font-size:2.5rem;margin-bottom:16px;">⚠</div>
     <p>No hay datos para mostrar.<br>
-    <a href="/" style="color:var(--gold2);text-decoration:none;font-weight:700;">
-      ← Realiza una consulta primero
-    </a></p>
+    <a href="/" style="color:var(--gold2);text-decoration:none;font-weight:700;">← Realiza una consulta primero</a></p>
   </div>
 
   <div class="persona-card" id="personaCard" style="display:none"></div>
@@ -238,6 +363,53 @@
   <div class="timestamp" id="timestamp"></div>
 </main>
 
+<!-- ══ MODAL HISTORIAL DE PUNTOS ══ -->
+<div class="modal-overlay" id="modalOverlay" onclick="cerrarModal(event)">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-puntos-badge">
+          <span class="modal-puntos-num" id="modalPuntosNum">—</span>
+          <span class="modal-puntos-lbl">pts</span>
+        </div>
+        <div>
+          <div class="modal-title" id="modalTitulo">Detalle de Puntos</div>
+          <div class="modal-subtitle" id="modalNombre">—</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('modalOverlay').classList.remove('open')" aria-label="Cerrar">✕</button>
+    </div>
+
+    <div class="puntos-bar-wrap" id="puntosBarWrap">
+      <div class="puntos-bar-label">
+        <span>Saldo de puntos</span>
+        <strong id="barLabel">— / 30</strong>
+      </div>
+      <div class="puntos-bar-track">
+        <div class="puntos-bar-fill" id="puntosBarFill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <table class="hist-table">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Observación</th>
+            <th>Tipo</th>
+            <th>Anterior</th>
+            <th>Cambio</th>
+            <th>Saldo</th>
+          </tr>
+        </thead>
+        <tbody id="historialBody"></tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
 <script>
   const TABS   = ['pendientes','pagadas','anuladas','impugnadas'];
   const LABELS = { pendientes:'Pendientes', pagadas:'Pagadas', anuladas:'Anuladas', impugnadas:'En Impugnación' };
@@ -245,16 +417,33 @@
 
   window.addEventListener('DOMContentLoaded', () => {
     const raw = sessionStorage.getItem('informacion');
-    if (!raw) { document.getElementById('no-data').style.display = 'block'; return; }
+    if (!raw) { document.getElementById('noData').style.display = 'block'; return; }
     datos = JSON.parse(raw);
     renderTodo();
   });
 
+  /* ── Escape cierra modal ── */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.getElementById('modalOverlay').classList.remove('open');
+  });
+
+  function cerrarModal(e) {
+    if (e.target === document.getElementById('modalOverlay'))
+      document.getElementById('modalOverlay').classList.remove('open');
+  }
+
+  /* ── Render principal ── */
   function renderTodo() {
     const d = datos, p = d.persona, l = d.licencia;
-    const estadoLic = l ? l.estado : '—';
-    const colorLic  = estadoLic === 'ACTIVA' ? 'var(--green)'
-                    : estadoLic === 'SUSPENDIDA' ? 'var(--red)' : 'var(--gray)';
+    const puntos = l ? (l.puntos ?? l.saldo_puntos ?? '—') : '—';
+    const estadoLic = l ? (l.estado || '—').toUpperCase() : '—';
+    const colorLic  = estadoLic === 'ACTIVA'     ? 'var(--green)'
+                    : estadoLic === 'SUSPENDIDA'  ? 'var(--red)'
+                    : estadoLic === 'CADUCADA'    ? 'var(--amber)' : 'var(--gray)';
+
+    /* Porcentaje y color de la barra */
+    const pct = typeof puntos === 'number' ? Math.round((puntos / 30) * 100) : 0;
+    const barColor = pct > 60 ? 'var(--green)' : pct > 30 ? 'var(--amber)' : 'var(--red)';
 
     document.getElementById('personaCard').innerHTML = `
       <div>
@@ -267,24 +456,32 @@
         </div>
       </div>
       <div class="licencia-side">
-        <div class="puntos-circle">
-          <span class="puntos-num">${l ? l.puntos : '—'}</span>
-          <span class="puntos-lbl">puntos</span>
-        </div>
+        <button class="puntos-btn" onclick="abrirModal()" title="Ver historial de puntos" aria-label="Ver detalle de puntos">
+          <div class="puntos-circle">
+            <span class="puntos-num">${puntos}</span>
+            <span class="puntos-lbl">puntos</span>
+          </div>
+        </button>
+        <div class="puntos-hint">↑ Ver historial</div>
         <div class="lic-meta">
           LICENCIA TIPO: <span>${l ? l.tipo : '—'}</span><br>
           VALIDEZ: <span>${l ? fmtFecha(l.fecha_emision)+' – '+fmtFecha(l.fecha_expiracion) : '—'}</span><br>
-          ESTADO: <span style="color:${colorLic};font-weight:700">${estadoLic}</span>
+          ESTADO: <span style="color:${colorLic}">${estadoLic}</span>
         </div>
       </div>`;
     document.getElementById('personaCard').style.display = 'flex';
 
+    /* Barra de puntos del modal */
+    document.getElementById('puntosBarFill').style.width  = pct + '%';
+    document.getElementById('puntosBarFill').style.background = barColor;
+    document.getElementById('barLabel').textContent = `${puntos} / 30`;
+
     const totalPend = d.total_pendiente;
     document.getElementById('finGrid').innerHTML = `
       <div class="fin-card"><div class="fin-label">Valor Pendiente</div>
-        <div class="fin-value ${totalPend>0?'danger':'ok'}">$ ${totalPend.toFixed(2)}</div></div>
+        <div class="fin-value ${totalPend > 0 ? 'danger' : 'ok'}">$ ${totalPend.toFixed(2)}</div></div>
       <div class="fin-card"><div class="fin-label">Pendientes</div>
-        <div class="fin-value ${d.pendientes.length>0?'warn':'ok'}">${d.pendientes.length}</div></div>
+        <div class="fin-value ${d.pendientes.length > 0 ? 'warn' : 'ok'}">${d.pendientes.length}</div></div>
       <div class="fin-card"><div class="fin-label">Pagadas</div>
         <div class="fin-value ok">${d.pagadas.length}</div></div>
       <div class="fin-card"><div class="fin-label">En Impugnación</div>
@@ -292,12 +489,50 @@
       <div class="fin-card"><div class="fin-label">Anuladas</div>
         <div class="fin-value">${d.anuladas.length}</div></div>`;
 
-    renderTabs(); renderTabla();
+    renderTabs();
+    renderTabla();
     document.getElementById('tableWrap').style.display = 'block';
     document.getElementById('timestamp').textContent =
       `CONSULTA · PRODUCCIÓN · ${new Date().toLocaleString('es-EC')} · AXIS – Versión 4.0`;
   }
 
+  /* ── Abrir modal historial ── */
+  function abrirModal() {
+    const d = datos, p = d.persona, l = d.licencia;
+    const puntos = l ? (l.puntos ?? l.saldo_puntos ?? '—') : '—';
+
+    document.getElementById('modalPuntosNum').textContent = puntos;
+    document.getElementById('modalNombre').textContent =
+      `${p.cedula} · ${p.apellidos} ${p.nombres}`;
+
+    /* Historial */
+    const hist = d.historial_puntos || [];
+    const tbody = document.getElementById('historialBody');
+
+    if (!hist.length) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--gray);font-family:'Syne',sans-serif;">Sin movimientos registrados</td></tr>`;
+    } else {
+      tbody.innerHTML = hist.map(h => {
+        const delta = h.cantidad_puntos;
+        const cls   = delta < 0 ? 'neg' : delta > 0 ? 'pos' : 'neu';
+        const sign  = delta > 0 ? '+' : '';
+        const tipo  = (h.tipo_movimiento || '').toUpperCase();
+        return `
+          <tr>
+            <td style="white-space:nowrap">${fmtFechaHora(h.fecha)}</td>
+            <td class="td-obs">${h.observacion || '—'}</td>
+            <td><span class="tipo-badge tipo-${tipo}">${tipo}</span></td>
+            <td style="text-align:right">${h.puntos_anterior ?? '—'}</td>
+            <td><span class="puntos-delta ${cls}">${sign}${delta}</span></td>
+            <td style="font-weight:700;text-align:right">${h.saldo_puntos ?? '—'}</td>
+          </tr>`;
+      }).join('');
+    }
+
+    document.getElementById('modalOverlay').classList.add('open');
+  }
+
+  /* ── Tabs ── */
   function renderTabs() {
     document.getElementById('tabs').innerHTML = TABS.map(t => `
       <button class="tab ${t===tabActual?'active':''}" onclick="cambiarTab('${t}')">
@@ -307,6 +542,7 @@
 
   function cambiarTab(tab) { tabActual = tab; renderTabs(); renderTabla(); }
 
+  /* ── Tabla citaciones ── */
   function renderTabla() {
     const lista = datos[tabActual];
     const tbody = document.getElementById('tablaCitaciones');
@@ -315,21 +551,25 @@
         <span class="empty-icon">📋</span>No hay citaciones en este estado</div></td></tr>`;
       return;
     }
-    tbody.innerHTML = lista.map((c,i) => `
-      <tr>
-        <td>${i+1}</td>
-        <td>${c.numero_citacion||'—'}</td>
-        <td class="td-text">${c.entidad||'—'}</td>
-        <td>${c.placa||'—'}</td>
-        <td>${fmtFechaHora(c.fecha)}</td>
-        <td class="td-text">${c.nombre_contravencion||'—'}</td>
-        <td>${c.puntos_perdidos??0}</td>
-        <td>$ ${parseFloat(c.multa_calculada||0).toFixed(2)}</td>
-        <td>$ ${parseFloat(c.total_pagar||0).toFixed(2)}</td>
-        <td><span class="pill pill-${c.estado}">${c.estado}</span></td>
-      </tr>`).join('');
+    tbody.innerHTML = lista.map((c,i) => {
+      const est = (c.estado || '').toUpperCase();
+      return `
+        <tr>
+          <td>${i+1}</td>
+          <td>${c.numero_citacion||'—'}</td>
+          <td class="td-text">${c.entidad||'—'}</td>
+          <td>${c.placa||'—'}</td>
+          <td>${fmtFechaHora(c.fecha || c.fecha_emision)}</td>
+          <td class="td-text">${c.nombre_contravencion||'—'}</td>
+          <td style="text-align:center">${c.puntos_perdidos??0}</td>
+          <td>$ ${parseFloat(c.multa_calculada||0).toFixed(2)}</td>
+          <td>$ ${parseFloat(c.total_pagar||0).toFixed(2)}</td>
+          <td><span class="pill pill-${est}">${est}</span></td>
+        </tr>`;
+    }).join('');
   }
 
+  /* ── Helpers de fecha ── */
   function fmtFecha(d) {
     if (!d) return '—';
     return new Date(d).toLocaleDateString('es-EC',{day:'2-digit',month:'2-digit',year:'numeric'});
